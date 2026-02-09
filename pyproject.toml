@@ -1,12 +1,14 @@
 [project]
 name = "pinpoint"
 version = "0.1.0"
-description = "Add your description here"
+description = "Dependency-aware AI context baseline for coding agents"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = []
 
-
+[tool.pinpoint.ai]
+context_file = ".ai/dependency-context.json"
+context_generator = "python scripts/export_dependency_context.py"
 
 [tool.uv]
 # workspace 根虽然没代码，但作为聚合包
