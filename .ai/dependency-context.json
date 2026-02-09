@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-02-09T12:30:24.513969+00:00",
+  "project": {
+    "name": "pinpoint",
+    "version": "0.1.0",
+    "requires_python": ">=3.9"
+  },
+  "dependencies": [],
+  "notes": [
+    "Generated from pyproject.toml.",
+    "Prefer this artifact over memory-based API assumptions."
+  ]
+}

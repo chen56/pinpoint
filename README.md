@@ -1,13 +1,42 @@
 # PinPoint
 
+## 目标
 
-## 需求
+把“项目依赖版本 -> AI 可消费上下文”这件事标准化，降低 AI 编码工具（如 Codex / Gemini CLI）在依赖 API 上的幻觉概率。
 
-有没有一个工具互或skill，可以按项目配置的依赖版本下载或整理依赖的skill用法，比如我python项目pyproject.toml依赖了pydantic v2.0版本，这个工具帮我把这个版本的确定性内容生成适合ai阅读的接口、测试等索引，以便其不会幻觉瞎讲，我观察目前貌似市面上的很多skill或最佳实践skill都是没有版本，这样不混乱吗?
+## 当前 AI 工程化配置
 
-目前成气候的有点像这种需求的context7这个网站，他也只是一个skill的实时引擎，并没有按版本查找的功能.
+- `AGENTS.md`：仓库级 agent 协作规范。
+- `docs/ai-agent-standards.md`：采用的开放实践说明。
+- `scripts/export_dependency_context.py`：从 `pyproject.toml` 生成依赖上下文。
+- `.ai/dependency-context.json`：可提交、可审查的机器可读上下文。
+- `.github/copilot-instructions.md`：IDE 内 AI 助手一致性提示。
+- `.editorconfig`：跨工具基础格式规范。
 
-感觉一个skill解决不了这个问题，可能需要一个工具，这个工具可以按项目配置的依赖版本下载或整理依赖的skill用法。
+## 快速开始
 
-gemini --list-sessions
-gemini --resume <index_number>\n
+```bash
+python scripts/export_dependency_context.py
+python scripts/export_dependency_context.py --check
+python scripts/validate_ai_baseline.py
+python -m unittest -v
+python -m compileall .
+```
+
+## 设计说明
+
+> 你提到的问题是“skill 往往不区分依赖版本，导致内容混乱”。
+
+本仓库采用“生成式上下文工件”的方式：
+
+1. 以 `pyproject.toml`（后续可扩展 lockfile）作为版本源。
+2. 生成 `.ai/dependency-context.json`，供任何 agent 读取。
+3. 在本地检查和 CI 中通过 `--check` 保证上下文不过期。
+
+这样，AI 工具不需要依赖模糊记忆，而是读取项目自己的版本化事实。
+
+
+## 验证方案（Python）
+
+- `scripts/validate_ai_baseline.py`：一键校验依赖上下文是否最新（内部调用 `--check`）并验证 `.ai/dependency-context.json` 结构。
+- `tests/test_ai_baseline.py`：回归测试导出、检查与基线验证流程。
