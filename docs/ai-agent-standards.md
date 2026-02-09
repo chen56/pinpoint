@@ -1,27 +1,27 @@
-# AI Agent Engineering Standards
+# AI 智能体工程标准
 
-This project adopts lightweight, open, agent-friendly conventions:
+本项目采用轻量级、开放、对智能体友好的约定：
 
-## 1) Interoperable agent instructions
-- `AGENTS.md` at repo root defines universal behavior for code agents.
-- Keep instructions concise, deterministic, and testable.
+## 1) 互操作的智能体指令
+- 仓库根目录下的 `AGENTS.md` 定义了代码智能体的通用行为。
+- 保持指令简洁、确定且可测试。
 
-## 2) Deterministic dependency context
-- Source of truth: `pyproject.toml` and lockfile (`uv.lock` when present).
-- Generated artifact: `.ai/dependency-context.json`.
-- The artifact is intended for AI tooling ingestion and should be committed.
+## 2) 确定性的依赖上下文
+- 真实来源：`pyproject.toml` 和锁定文件（存在时的 `uv.lock`）。
+- 生成产物：`.ai/dependency-context.json`。
+- 该产物旨在供 AI 工具摄取，并且应该被提交到版本控制中。
 
-## 3) Structured context format
-- `.ai/dependency-context.json` follows a stable JSON structure with:
-  - project metadata
-  - declared dependencies
-  - optional locked versions
-  - generation timestamp
+## 3) 结构化上下文格式
+- `.ai/dependency-context.json` 遵循稳定的 JSON 结构，包含：
+  - 项目元数据
+  - 声明的依赖
+  - 可选的锁定版本
+  - 生成时间戳
 
-## 4) Automation-first validation
-- A scripted check (`--check`) enforces that committed context is current.
-- This enables CI usage and reduces hallucination risks from stale docs.
+## 4) 自动化优先验证
+- 脚本化检查 (`--check`) 强制要求提交的上下文是最新的。
+- 这使得 CI 使用成为可能，并减少因文档过时导致的幻觉风险。
 
-## 5) Collaboration conventions
-- Commit messages follow Conventional Commits.
-- Keep agent-generated changes small and auditable.
+## 5) 协作约定
+- 提交信息遵循 Conventional Commits。
+- 保持智能体生成的更改小型且可审计。
