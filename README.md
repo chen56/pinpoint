@@ -18,6 +18,8 @@
 ```bash
 python scripts/export_dependency_context.py
 python scripts/export_dependency_context.py --check
+python scripts/validate_ai_baseline.py
+python -m unittest -v
 python -m compileall .
 ```
 
@@ -32,3 +34,9 @@ python -m compileall .
 3. 在本地检查和 CI 中通过 `--check` 保证上下文不过期。
 
 这样，AI 工具不需要依赖模糊记忆，而是读取项目自己的版本化事实。
+
+
+## 验证方案（Python）
+
+- `scripts/validate_ai_baseline.py`：一键校验依赖上下文是否最新（内部调用 `--check`）并验证 `.ai/dependency-context.json` 结构。
+- `tests/test_ai_baseline.py`：回归测试导出、检查与基线验证流程。
